@@ -1,0 +1,97 @@
+name: PCOS CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+
+      - name: Lint backend
+        run: |
+          flake8 backend/app backend/tests --max-line-length=120
+
+      - name: Test backend
+        env:
+          PYTHONPATH: backend
+          DATABASE_URL: sqlite:///./backend/test.db
+          REDIS_URL: redis://localhost:6379/0
+          RABBITMQ_URL: amqp://guest:guest@localhost:5672/
+          JWT_SECRET_KEY: test-secret
+          MINIO_ENDPOINT: localhost:9000
+          MINIO_ACCESS_KEY: minioadmin
+          MINIO_SECRET_KEY: minioadmin
+          MLFLOW_TRACKING_URI: file:./backend/storage/mlruns
+          MODEL_PATH: backend/storage/models/pcos_ensemble_v1.joblib
+        run: |
+          pytest backend/tests -q
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: pcos-prediction/frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Lint frontend
+        run: npm run lint
+
+      - name: Test frontend
+        run: npm test -- --runInBand
+
+      - name: Build frontend
+        run: npm run build
+
+  deploy-staging:
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - backend
+      - frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Package release bundle
+        run: |
+          tar -czf pcos-prediction-staging.tgz backend frontend ml_pipeline README.md .env.example
+
+      - name: Deploy bundle to staging host
+        if: ${{ secrets.STAGING_SSH_HOST != '' && secrets.STAGING_SSH_USER != '' && secrets.STAGING_SSH_KEY != '' }}
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.STAGING_SSH_HOST }}
+          username: ${{ secrets.STAGING_SSH_USER }}
+          key: ${{ secrets.STAGING_SSH_KEY }}
+          source: pcos-prediction-staging.tgz
+          target: ${{ secrets.STAGING_DEPLOY_PATH || '/var/www/pcos-prediction' }}

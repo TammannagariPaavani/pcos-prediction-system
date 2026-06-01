@@ -1,0 +1,12 @@
+.next/
+node_modules/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+backend/storage/reports/*
+backend/storage/mlruns/
+backend/test.db
+*.pyc
+*.pyo
+*.pyd
+.DS_Store

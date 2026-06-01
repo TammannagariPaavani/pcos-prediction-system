@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f7efe7;
+  --panel: rgba(255, 255, 255, 0.86);
+  --ink: #10222b;
+  --muted: #5e6c72;
+  --accent: #e86a33;
+  --accent-deep: #c94d17;
+  --teal: #0f4c5c;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(232, 106, 51, 0.18), transparent 32%),
+    radial-gradient(circle at top right, rgba(15, 76, 92, 0.14), transparent 35%),
+    linear-gradient(180deg, #fbf6f1 0%, #eef6f7 100%);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Fraunces", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.panel {
+  @apply rounded-[28px] border border-white/60 bg-white/80 backdrop-blur-xl shadow-glow;
+}
+
+.metric-card {
+  @apply panel p-5 animate-rise;
+}
