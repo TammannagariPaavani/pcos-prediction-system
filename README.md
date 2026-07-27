@@ -1,57 +1,47 @@
 # 🩺 PCOS Prediction System
 
-A Full-Stack Machine Learning web application for predicting the risk of Polycystic Ovary Syndrome (PCOS). The system provides role-based dashboards for Patients, Doctors, and Admins, enabling secure prediction, patient management, and report generation.
+A Full-Stack Machine Learning-based web application for predicting the risk of Polycystic Ovary Syndrome (PCOS). The system includes secure authentication, role-based dashboards, and explainable AI to assist patients and healthcare professionals.
 
----
+## ✨ Features
 
-## 🚀 Features
-
-- 🔐 JWT Authentication & Role-Based Access Control
+- 🔐 JWT Authentication
 - 👩 Patient Dashboard
 - 👨‍⚕️ Doctor Dashboard
 - 👨‍💼 Admin Dashboard
-- 🤖 Machine Learning-based PCOS Risk Prediction
+- 🤖 Machine Learning Prediction
 - 📊 SHAP Explainability
-- 📈 Prediction History
 - 📄 PDF Report Generation
-- 📱 Responsive UI
-- 📑 Swagger API Documentation
+- 📈 Prediction History
+- 📱 Responsive Design
 
----
+## 🛠️ Tech Stack
 
-## 🛠 Tech Stack
-
-### Frontend
+**Frontend**
 - Next.js
-- React.js
+- React
 - Tailwind CSS
 - Axios
-- Recharts
 
-### Backend
+**Backend**
 - FastAPI
 - SQLAlchemy
 - Alembic
 - JWT Authentication
 
-### Machine Learning
+**Machine Learning**
 - Scikit-learn
 - XGBoost
 - Random Forest
 - Logistic Regression
 - SHAP
-- MLflow
 
-### Database
+**Database**
 - PostgreSQL
-
----
 
 ## 📂 Project Structure
 
 ```text
 pcos-prediction/
-│
 ├── frontend/
 ├── backend/
 ├── ml_pipeline/
@@ -60,11 +50,7 @@ pcos-prediction/
 └── .gitignore
 ```
 
----
-
-## ⚙️ Installation
-
-### Clone Repository
+## 🚀 Getting Started
 
 ```bash
 git clone https://github.com/TammannagariPaavani/pcos-prediction-system.git
@@ -87,72 +73,12 @@ npm install
 npm run dev
 ```
 
----
-
-## 📊 Machine Learning Models
-
-- Random Forest
-- XGBoost
-- Logistic Regression
-- Ensemble Model
-
-The system predicts PCOS risk using clinical parameters and provides explainable predictions using SHAP.
-
----
-
-## 👥 User Roles
-
-### Patient
-
-- Register/Login
-- Enter Health Details
-- View Prediction
-- Download Report
-- View Prediction History
-
-### Doctor
-
-- View Assigned Patients
-- Review Predictions
-- Add Clinical Notes
-
-### Admin
-
-- Manage Doctors
-- Assign Patients
-- View Dashboard Statistics
-- Monitor System Activity
-
----
-
-## 📷 Screenshots
-
-> Add screenshots here.
-
-- Home Page
-- Patient Dashboard
-- Doctor Dashboard
-- Admin Dashboard
-- Prediction Result
-
----
-
-## 📌 Future Enhancements
-
-- Email Notifications
-- Cloud Deployment
-- Real-time Analytics
-- Mobile Application
-- Multi-language Support
-
----
-
 ## 👩‍💻 Author
 
 **Tammannagari Paavani**
 
-- GitHub: https://github.com/TammannagariPaavani
-- LinkedIn: *(https://www.linkedin.com/in/paavani-tammannagari-1240b9382)*
+
 
 ---
 
+⭐ If you found this project useful, please consider giving it a star.
